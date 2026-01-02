@@ -7,10 +7,12 @@
 //
 
 import SwiftUI
+import AVFAudio
 
 struct ContentView: View {
     
     @State private var currentIndex = 0
+    private var audioPlayer: AVAudioPlayer!
     
     private let names = ["Ada Lovelace",
                          "Admiral Grace Hopper",
@@ -50,11 +52,8 @@ struct ContentView: View {
                 
                 HStack {
                     Button {
-                        if currentIndex > 0 {
-                            currentIndex -= 1
-                        } else {
-                            currentIndex = names.count - 1
-                        }
+                        // One line solution using % operator
+                        currentIndex = currentIndex % (names.count) == 0 ? (names.count - 1) : (currentIndex - 1)
                     } label: {
                         Image(systemName: "chevron.left.circle")
                         
@@ -70,11 +69,8 @@ struct ContentView: View {
                     Spacer()
                     
                     Button {
-                        if currentIndex < names.count - 1 {
-                            currentIndex += 1
-                        } else {
-                            currentIndex = 0
-                        }
+                        // One line solution using ternary operator
+                        currentIndex = currentIndex < (names.count - 1) ? (currentIndex + 1) : 0
                     } label: {
                         Image(systemName: "chevron.right.circle")
                         
@@ -105,6 +101,12 @@ struct ContentView: View {
         HStack {
             Spacer()
             Button {
+                // Shuffle name to display
+                let previousIndex = currentIndex
+                while previousIndex == currentIndex {
+                    currentIndex = Int.random(in: 0...names.count - 1)
+                }
+                playSound(soundName: "theme")
                 
             } label: {
                 Image(systemName: "shuffle")
@@ -115,6 +117,12 @@ struct ContentView: View {
         .tint(.white)
         .padding()
         .background(.cyan.opacity(0.5))
+    }
+    
+    
+    func playSound(soundName: String) {
+        print(soundName)
+        
     }
 }
 
