@@ -50,7 +50,11 @@ struct ContentView: View {
                 
                 HStack {
                     Button {
-                        
+                        if currentIndex > 0 {
+                            currentIndex -= 1
+                        } else {
+                            currentIndex = names.count - 1
+                        }
                     } label: {
                         Image(systemName: "chevron.left.circle")
                         
@@ -66,7 +70,11 @@ struct ContentView: View {
                     Spacer()
                     
                     Button {
-                        
+                        if currentIndex < names.count - 1 {
+                            currentIndex += 1
+                        } else {
+                            currentIndex = 0
+                        }
                     } label: {
                         Image(systemName: "chevron.right.circle")
                         
@@ -81,6 +89,7 @@ struct ContentView: View {
         
         
         Image(names[currentIndex])
+            .resizable()
             .scaledToFit()
             .clipShape(RoundedRectangle(cornerRadius: 10))
             .shadow(radius: 20)
