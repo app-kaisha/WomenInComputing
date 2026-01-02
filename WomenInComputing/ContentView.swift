@@ -11,12 +11,41 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            HStack {
+                Button {
+                    
+                } label: {
+                    Image(systemName: "chevron.left.circle")
+                    
+                }
+                Spacer()
+                Button {
+                    
+                } label: {
+                    Image(systemName: "chevron.right.circle")
+                    
+                }
+            }
+            .font(.largeTitle).bold()
+            .tint(.white)
+            .padding()
+            .background(.cyan.opacity(0.5))
         }
+        Spacer()
+        
+        HStack {
+            Spacer()
+            Button {
+                
+            } label: {
+                Image(systemName: "shuffle")
+                
+            }
+        }
+        .font(.largeTitle).bold()
+        .tint(.white)
         .padding()
+        .background(.cyan.opacity(0.5))
     }
 }
 
