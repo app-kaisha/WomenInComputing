@@ -53,7 +53,8 @@ struct ContentView: View {
                 HStack {
                     Button {
                         // One line solution using % operator
-                        currentIndex = currentIndex % (names.count) == 0 ? (names.count - 1) : (currentIndex - 1)
+//                        currentIndex = currentIndex % (names.count) == 0 ? (names.count - 1) : (currentIndex - 1)
+                        currentIndex = (currentIndex - 1 + names.count) % names.count
                     } label: {
                         Image(systemName: "chevron.left.circle")
                         
@@ -61,7 +62,6 @@ struct ContentView: View {
                     Spacer()
                     
                     Text(names[currentIndex])
-                        .font(.largeTitle).bold()
                         .foregroundStyle(.white)
                         .minimumScaleFactor(0.5)
                         .lineLimit(1)
@@ -70,7 +70,8 @@ struct ContentView: View {
                     
                     Button {
                         // One line solution using ternary operator
-                        currentIndex = currentIndex < (names.count - 1) ? (currentIndex + 1) : 0
+//                        currentIndex = currentIndex < (names.count - 1) ? (currentIndex + 1) : 0
+                        currentIndex = currentIndex >= names.count-1 ? 0 : currentIndex+1
                     } label: {
                         Image(systemName: "chevron.right.circle")
                         
@@ -102,10 +103,17 @@ struct ContentView: View {
             Spacer()
             Button {
                 // Shuffle name to display
-                let previousIndex = currentIndex
-                while previousIndex == currentIndex {
-                    currentIndex = Int.random(in: 0...names.count - 1)
-                }
+//                let previousIndex = currentIndex
+//                while previousIndex == currentIndex {
+//                    currentIndex = Int.random(in: 0...names.count - 1)
+//                }
+                
+                var newIndex: Int
+                repeat {
+                    newIndex = Int.random(in: 0...names.count - 1)
+                } while newIndex == currentIndex
+                currentIndex = newIndex
+                
                 playSound(soundName: "theme")
                 
             } label: {
