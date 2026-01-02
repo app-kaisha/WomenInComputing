@@ -12,7 +12,7 @@ import AVFAudio
 struct ContentView: View {
     
     @State private var currentIndex = 0
-    private var audioPlayer: AVAudioPlayer!
+    @State private var audioPlayer: AVAudioPlayer!
     
     private let names = ["Ada Lovelace",
                          "Admiral Grace Hopper",
@@ -121,7 +121,20 @@ struct ContentView: View {
     
     
     func playSound(soundName: String) {
-        print(soundName)
+        if audioPlayer != nil && audioPlayer.isPlaying {
+            audioPlayer.stop()
+        }
+        guard let soundFile = NSDataAsset(name: soundName) else {
+            print("😡 Could not read file named \(soundName)")
+            return
+        }
+        
+        do {
+            audioPlayer = try AVAudioPlayer(data: soundFile.data)
+            audioPlayer.play()
+        } catch {
+            print("😡 ERROR: \(error.localizedDescription) creating audioPlayer.")
+        }
         
     }
 }
